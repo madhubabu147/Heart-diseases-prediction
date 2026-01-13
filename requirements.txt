@@ -4,10 +4,8 @@ scikit-learn
 seaborn
 ipykernel
 matplotlib
-flask 
+flask
 dvc
 catboost
 xgboost
 mlflow==2.2.2
-
--e .
