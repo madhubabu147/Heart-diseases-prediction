@@ -1,14 +1,19 @@
-# FROM  - the base image to use to start the build process.
-FROM python:3.8-slim-buster
+FROM python:3.9-slim
 
-# WORKDIR - sets the working directory for any RUN, CMD, ENTRYPOINT, COPY and ADD instructions that follow it in the Dockerfile.
 WORKDIR /app
 
-#COPY - copies files or directories and adds them to the filesystem of the container.
-COPY . ./
+# Install system dependencies (needed for XGBoost/CatBoost)
+RUN apt-get update && apt-get install -y \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
 
-# RUN - executes any commands in a new layer on top of the current image and commits the results.
-RUN pip install -r requirements.txt
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# CMD - provides defaults for an executing container.
-CMD python app.py
+COPY . .
+
+# Expose port
+EXPOSE 5000
+
+# Run app
+CMD ["python", "app.py"]

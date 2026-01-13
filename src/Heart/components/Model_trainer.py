@@ -43,7 +43,7 @@ class ModelTrainer:
                                          seed=27, reg_lambda=2, booster='dart', colsample_bylevel=0.6, colsample_bynode=0.5),
                 'K Nearest Neighbors':KNeighborsClassifier(n_neighbors=10),
                 'Decision Tree':DecisionTreeClassifier(criterion = 'entropy',random_state=0,max_depth = 6),
-                'Support Vector Machine':SVC(kernel='rbf', C=2)
+                'Support Vector Machine':SVC(kernel='rbf', C=2, probability=True)
                 }
             
             model_report = evaluate_model(X_train, y_train, X_test, y_test, models)
